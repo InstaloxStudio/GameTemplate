@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : Pawn
 {
     public float speed = 6.0f;
     public float turnSpeed = 100.0f;
@@ -8,17 +8,16 @@ public class PlayerCharacter : MonoBehaviour
     public float gravity = -9.81f;
     private CharacterController controller;
     private Vector3 velocity;
-    private PlayerController playerController;
     public bool isGrounded;
     public float groundCheckDistance = 0.1f;
+    public Transform cameraTarget;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerController = GameMode.Instance.GetPlayerController();
     }
 
-    public virtual void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
+    public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
         isGrounded = IsGrounded();
         Vector3 direction = CalculateDirection(movementInput);
@@ -28,8 +27,11 @@ public class PlayerCharacter : MonoBehaviour
         HandleJump(jumpInput);
     }
 
-    Vector3 CalculateDirection(Vector2 movementInput)
+    public virtual Vector3 CalculateDirection(Vector2 movementInput)
     {
+        // Get PlayerController from the base class
+        PlayerController playerController = GetPlayerController();
+
         Vector3 direction = Vector3.zero;
         if (movementInput.y > 0)
         {
@@ -53,8 +55,11 @@ public class PlayerCharacter : MonoBehaviour
         return direction;
     }
 
-    void RotateCharacter(Vector3 direction, Vector2 movementInput)
+    public virtual void RotateCharacter(Vector3 direction, Vector2 movementInput)
     {
+        // Get PlayerController from the base class
+        PlayerController playerController = GetPlayerController();
+
         if (movementInput != Vector2.zero)
         {
             Quaternion targetRotation = Quaternion.Euler(0, playerController.ActiveCamera.transform.eulerAngles.y, 0);
@@ -62,12 +67,12 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    void MoveCharacter(Vector3 direction)
+    public virtual void MoveCharacter(Vector3 direction)
     {
         controller.Move(direction * speed * Time.deltaTime);
     }
 
-    void ApplyGravity()
+    public virtual void ApplyGravity()
     {
         if (isGrounded && velocity.y < 0)
         {
@@ -77,7 +82,7 @@ public class PlayerCharacter : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void HandleJump(bool jumpInput)
+    public virtual void HandleJump(bool jumpInput)
     {
         if (jumpInput && isGrounded)
         {
@@ -85,7 +90,7 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    bool IsGrounded()
+    public virtual bool IsGrounded()
     {
         RaycastHit hit;
         float sphereRadius = controller.radius;
@@ -96,8 +101,4 @@ public class PlayerCharacter : MonoBehaviour
         }
         return false;
     }
-
-
-
-
 }

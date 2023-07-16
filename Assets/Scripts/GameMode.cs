@@ -9,8 +9,8 @@ public class GameMode : MonoBehaviour
     public PlayerController playerController;
     public static PlayerController PlayerController { get { return Instance.playerController; } }
 
-    public GameObject characterPrefab;
-    private PlayerCharacter defaultCharacter;
+    public Pawn defaultPawn;
+    private Pawn defaultCharacter;
 
     void Awake()
     {
@@ -41,22 +41,29 @@ public class GameMode : MonoBehaviour
             spawnPosition = Vector3.zero;
         }
 
-        if (characterPrefab == null)
+        if (defaultPawn == null)
         {
-            Debug.LogError("No default character prefab set in GameMode.");
+            //spawn in the default pawn
+            GameObject pawnObject = new GameObject("DefaultPawn");
+            defaultPawn = pawnObject.AddComponent<DefaultPawn>();
+            GameObject cameraObject = new GameObject("Camera");
+            Camera camera = cameraObject.AddComponent<Camera>();
+            var freecam = cameraObject.AddComponent<FreeCamera>();
+            freecam.Cam = camera;
+            cameraObject.transform.SetParent(pawnObject.transform);
         }
 
         // Spawn the default character
-        defaultCharacter = SpawnCharacter(characterPrefab, spawnPosition);
+        defaultCharacter = SpawnCharacter(defaultPawn.gameObject, spawnPosition);
 
         // Now possess the character
         //playerController.PossessCharacter(defaultCharacter);
     }
 
-    public PlayerCharacter SpawnCharacter(GameObject prefab, Vector3 spawnPosition)
+    public Pawn SpawnCharacter(GameObject prefab, Vector3 spawnPosition)
     {
         GameObject characterObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
-        PlayerCharacter newCharacter = characterObject.GetComponent<PlayerCharacter>();
+        Pawn newCharacter = characterObject.GetComponent<Pawn>();
         playerController.PossessCharacter(newCharacter);
         return newCharacter;
     }

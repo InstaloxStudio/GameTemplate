@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class SceneChanger : MonoBehaviour
 {
     public string sceneName;
-    public Button PlayButton;
+    public Button button;
 
     void Awake()
     {
-        PlayButton.onClick.AddListener(() => ChangeScene(sceneName));
+        button.onClick.AddListener(() => ChangeScene(sceneName));
     }
     public void ChangeScene(string sceneName)
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ThirdPersonCamera : MonoBehaviour
+public class ThirdPersonCamera : CameraController
 {
     public CameraBoom cameraBoom; // The camera boom to rotate
     public float mouseSensitivity = 10f; // Sensitivity of mouse movement
@@ -18,18 +18,17 @@ public class ThirdPersonCamera : MonoBehaviour
     [SerializeField]
     private PlayerController playerController;
 
-    void Start()
+    //void Start()
+    //{
+    //playerController = GameMode.Instance.GetPlayerController();
+    //if (playerController == null)
+    //{
+    //    playerController = FindObjectOfType<PlayerController>();
+    //  }
+    //}
+    public override void HandleCameraUpdate()
     {
-        playerController = GameMode.Instance.GetPlayerController();
-        if (playerController == null)
-        {
-            playerController = FindObjectOfType<PlayerController>();
-        }
-    }
-
-    void Update()
-    {
-        rotationInput = playerController.RotationInput;
+        //rotationInput = playerController.RotationInput;
 
 
         float targetX = currentX + rotationInput.x * mouseSensitivity;
@@ -51,5 +50,11 @@ public class ThirdPersonCamera : MonoBehaviour
         currentX = Mathf.SmoothDamp(currentX, targetX, ref xRotationV, xRotationSmoothTime);
         currentY = Mathf.SmoothDamp(currentY, targetY, ref yRotationV, yRotationSmoothTime);
         cameraBoom.transform.rotation = Quaternion.Euler(currentY, currentX, 0);
+    }
+
+    public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
+    {
+        this.rotationInput = rotationInput;
+
     }
 }

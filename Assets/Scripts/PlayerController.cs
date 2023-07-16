@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerCharacter activeCharacter;
+    public Pawn activeCharacter;
     private Vector2 movementInput;
     private Vector2 rotationInput;
     private bool jumpInput;
@@ -18,50 +18,79 @@ public class PlayerController : MonoBehaviour
 
     public Camera ActiveCamera { get { return activeCamera; } }
 
+    protected CameraController cameraController;
+    public CameraController CameraController { get { return cameraController; } }
+
+    public List<IControllable> controlledObjects = new List<IControllable>();
+
     void Update()
     {
         movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rotationInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         jumpInput = Input.GetButtonDown("Jump");
 
-        if (activeCharacter != null)
+        foreach (IControllable controlledObject in controlledObjects)
         {
-            activeCharacter.ReceiveInput(movementInput, rotationInput, jumpInput);
+            controlledObject.ReceiveInput(movementInput, rotationInput, jumpInput);
         }
+
+        if (cameraController != null)
+        {
+            cameraController.HandleCameraUpdate();
+        }
+
+        //if (activeCharacter != null)
+        //{
+        // activeCharacter.ReceiveInput(movementInput, rotationInput, jumpInput);
+        //}
     }
 
-    public void PossessCharacter(PlayerCharacter newCharacter)
+    public void PossessCharacter(Pawn newCharacter)
     {
-        activeCharacter = newCharacter;
+        if (cameraController != null)
+        {
+            cameraController.enabled = false;
+            //disable the camera in the cameracontroller
+        }
+
         if (activeCamera != null)
         {
             activeCamera.gameObject.SetActive(false);
         }
 
-        activeCamera = activeCharacter.GetComponentInChildren<Camera>();
-        if (activeCamera != null)
+        activeCharacter = newCharacter;
+        cameraController = activeCharacter.GetComponentInChildren<CameraController>();
+        if (cameraController != null)
         {
-            activeCamera.gameObject.SetActive(true);
-            ThirdPersonCamera thirdPersonCamera = activeCamera.GetComponent<ThirdPersonCamera>();
-            if (thirdPersonCamera != null)
-            {
-                // thirdPersonCamera.target = activeCharacter.transform;
-            }
-            else
-            {
-                Debug.LogError("ThirdPersonCamera component is missing on the activeCamera GameObject");
-            }
+            cameraController.enabled = true;
+
+            //activate the camera in the cameracontroller
+            activeCamera = cameraController.Cam;
+            activeCamera.enabled = true;
         }
         else
         {
-            Debug.LogError("Camera component is missing on the activeCharacter GameObject");
+            Debug.LogError("CameraController is missing on the activeCharacter GameObject");
         }
+
     }
 
 
-    public PlayerCharacter GetActiveCharacter()
+    public Pawn GetActiveCharacter()
     {
         return activeCharacter;
+    }
+
+    public void RegisterControlledObject(IControllable controlledObject)
+    {
+        if (!controlledObjects.Contains(controlledObject))
+            controlledObjects.Add(controlledObject);
+    }
+
+    public void UnregisterControlledObject(IControllable controlledObject)
+    {
+        if (controlledObjects.Contains(controlledObject))
+            controlledObjects.Remove(controlledObject);
     }
 }
 
