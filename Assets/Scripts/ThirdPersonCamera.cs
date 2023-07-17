@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Typical third person camera controller
+/// </summary>
 public class ThirdPersonCamera : CameraController
 {
     public CameraBoom cameraBoom; // The camera boom to rotate
@@ -18,17 +21,9 @@ public class ThirdPersonCamera : CameraController
     [SerializeField]
     private PlayerController playerController;
 
-    //void Start()
-    //{
-    //playerController = GameMode.Instance.GetPlayerController();
-    //if (playerController == null)
-    //{
-    //    playerController = FindObjectOfType<PlayerController>();
-    //  }
-    //}
+
     public override void HandleCameraUpdate()
     {
-        //rotationInput = playerController.RotationInput;
 
 
         float targetX = currentX + rotationInput.x * mouseSensitivity;

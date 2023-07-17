@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Controller for camera attached to pawns
+/// </summary>
 public abstract class CameraController : MonoBehaviour, IControllable
 {
     protected Transform target; // The target that the camera should follow (usually the player)
@@ -28,11 +31,9 @@ public abstract class CameraController : MonoBehaviour, IControllable
 
     protected virtual void Update()
     {
-
         HandleCameraUpdate();
-
     }
-    // Update the position, rotation, or any other parameters of the camera
+
     public abstract void HandleCameraUpdate();
     public abstract void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput);
 

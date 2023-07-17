@@ -1,7 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
-//singleton GameMode Class
-
+/// <summary>
+/// GameMode is a singleton class that manages the game state and contains references to all the pawns in the scene
+/// this is where the player controller is created and the default pawn is spawned
+/// if no spawn points are found, the default pawn will be spawned at the origin.
+/// </summary>
 public class GameMode : MonoBehaviour
 {
     public static GameMode Instance { get; private set; }
@@ -12,9 +18,16 @@ public class GameMode : MonoBehaviour
     public Pawn defaultPawn;
     private Pawn defaultCharacter;
 
+    //list of all pawns in the scene
+    public List<Pawn> Pawns = new List<Pawn>();
+
     void Awake()
     {
         Instance = this;
+
+        //gather all pawns in the scene
+        Pawns.AddRange(FindObjectsOfType<Pawn>());
+
 
         // Ensure PlayerController is assigned first
         playerController = FindObjectOfType<PlayerController>();
@@ -31,7 +44,7 @@ public class GameMode : MonoBehaviour
         // If any spawnpoints are found choose a random one to spawn at
         if (spawnPoints.Length > 0)
         {
-            int randomSpawnPoint = Random.Range(0, spawnPoints.Length);
+            int randomSpawnPoint = UnityEngine.Random.Range(0, spawnPoints.Length);
             spawnPosition = spawnPoints[randomSpawnPoint].transform.position;
         }
         else
@@ -56,15 +69,13 @@ public class GameMode : MonoBehaviour
         // Spawn the default character
         defaultCharacter = SpawnCharacter(defaultPawn.gameObject, spawnPosition);
 
-        // Now possess the character
-        //playerController.PossessCharacter(defaultCharacter);
     }
 
     public Pawn SpawnCharacter(GameObject prefab, Vector3 spawnPosition)
     {
         GameObject characterObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
         Pawn newCharacter = characterObject.GetComponent<Pawn>();
-        playerController.PossessCharacter(newCharacter);
+        playerController.Possess(newCharacter);
         return newCharacter;
     }
 

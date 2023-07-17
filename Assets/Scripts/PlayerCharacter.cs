@@ -1,6 +1,10 @@
 using UnityEngine;
 
-public class PlayerCharacter : Pawn
+/// <summary>
+/// Basic character pawn with basic movement and jumping.
+/// Movement uses the camera's forward and right vectors to determine the direction to move in.
+/// </summary>
+public class Character : Pawn
 {
     public float speed = 6.0f;
     public float turnSpeed = 100.0f;
@@ -10,7 +14,6 @@ public class PlayerCharacter : Pawn
     private Vector3 velocity;
     public bool isGrounded;
     public float groundCheckDistance = 0.1f;
-    public Transform cameraTarget;
 
     void Start()
     {

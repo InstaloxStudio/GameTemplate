@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+        //send all input to the active character
         movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         rotationInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         jumpInput = Input.GetButtonDown("Jump");
@@ -38,33 +40,29 @@ public class PlayerController : MonoBehaviour
         {
             cameraController.HandleCameraUpdate();
         }
-
-        //if (activeCharacter != null)
-        //{
-        // activeCharacter.ReceiveInput(movementInput, rotationInput, jumpInput);
-        //}
     }
 
-    public void PossessCharacter(Pawn newCharacter)
+    public void Possess(Pawn pawn)
     {
+        if (activeCharacter != null)
+        {
+            activeCharacter.Unpossessed(this);
+        }
         if (cameraController != null)
         {
-            cameraController.enabled = false;
-            //disable the camera in the cameracontroller
+            cameraController = null;
         }
 
         if (activeCamera != null)
         {
-            activeCamera.gameObject.SetActive(false);
+            activeCamera = null;
         }
 
-        activeCharacter = newCharacter;
-        cameraController = activeCharacter.GetComponentInChildren<CameraController>();
+        activeCharacter = pawn;
+
+        cameraController = activeCharacter.CameraController;
         if (cameraController != null)
         {
-            cameraController.enabled = true;
-
-            //activate the camera in the cameracontroller
             activeCamera = cameraController.Cam;
             activeCamera.enabled = true;
         }
@@ -72,9 +70,21 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("CameraController is missing on the activeCharacter GameObject");
         }
+        activeCharacter.Possessed(this);
 
     }
 
+    public void Unpossess()
+    {
+        if (activeCharacter != null)
+        {
+            activeCharacter.Unpossessed(this);
+        }
+
+        activeCharacter = null;
+        cameraController = null;
+        activeCamera = null;
+    }
 
     public Pawn GetActiveCharacter()
     {
