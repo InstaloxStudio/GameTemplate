@@ -19,6 +19,8 @@ public abstract class CameraController : MonoBehaviour, IControllable
         if (playerController != null)
         {
             target = playerController.GetActiveCharacter().cameraTarget;
+            //register 
+            playerController.RegisterControlledObject(this);
 
         }
     }
@@ -31,24 +33,14 @@ public abstract class CameraController : MonoBehaviour, IControllable
     public abstract void HandleCameraUpdate();
     public abstract void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput);
 
-    public virtual void OnEnable()
+    public virtual void OnDestroy()
     {
-        //register as a controllable
-        PlayerController playerController = GameMode.Instance.GetPlayerController();
-        if (playerController != null)
-        {
-            playerController.RegisterControlledObject(this);
-        }
-    }
-
-    public virtual void OnDisable()
-    {
-        //unregister as a controllable
         PlayerController playerController = GameMode.Instance.GetPlayerController();
         if (playerController != null)
         {
             playerController.UnregisterControlledObject(this);
         }
     }
+
 
 }

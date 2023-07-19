@@ -17,23 +17,22 @@ public class Pawn : MonoBehaviour, IControllable
 
     private CameraController cameraController;
     public CameraController CameraController { get { return cameraController; } }
+    public PlayerController PlayerController { get { return GameMode.Instance.GetPlayerController(); } }
 
     public virtual void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
         // This method should be overridden by the subclasses to define the behavior
     }
-
-    protected virtual void Awake()
+    public bool isPossessed = false;
+    public void Awake()
     {
         cameraController = GetComponentInChildren<CameraController>();
-        DisableCameraController();
 
-        // Automatically register with the PlayerController when this object becomes active
-        PlayerController playerController = GameMode.Instance.GetPlayerController();
-        if (playerController != null)
-        {
-            playerController.RegisterControlledObject(this);
-        }
+    }
+
+    public virtual void Start()
+    {
+        this.PlayerController.RegisterControlledObject(this);
     }
 
     public virtual void DisableCameraController()
@@ -67,31 +66,9 @@ public class Pawn : MonoBehaviour, IControllable
     protected virtual void OnDestroy()
     {
         // Automatically unregister from the PlayerController when this object is destroyed
-        PlayerController playerController = GameMode.Instance.GetPlayerController();
-        if (playerController != null)
-        {
-            playerController.UnregisterControlledObject(this);
-        }
-    }
 
-    protected virtual void OnEnable()
-    {
-        // Automatically register with the PlayerController when this object becomes active
-        PlayerController playerController = GameMode.Instance.GetPlayerController();
-        if (playerController != null)
-        {
-            playerController.RegisterControlledObject(this);
-        }
-    }
+        this.PlayerController.UnregisterControlledObject(this);
 
-    protected virtual void OnDisable()
-    {
-        // Automatically unregister from the PlayerController when this object is disabled
-        PlayerController playerController = GameMode.Instance.GetPlayerController();
-        if (playerController != null)
-        {
-            playerController.UnregisterControlledObject(this);
-        }
     }
 
     public PlayerController GetPlayerController()
@@ -104,6 +81,7 @@ public class Pawn : MonoBehaviour, IControllable
     {
         EnableCameraController();
         OnPossessed?.Invoke(playerController);
+        isPossessed = true;
     }
 
     // This method is called by the PlayerController when this pawn is unpossessed
@@ -111,7 +89,9 @@ public class Pawn : MonoBehaviour, IControllable
     {
         DisableCameraController();
         OnUnpossessed?.Invoke(playerController);
+        isPossessed = false;
     }
+
 
 
 }

@@ -21,16 +21,18 @@ public class Character : Pawn
     public bool isGrounded;
     public float groundCheckDistance = 0.1f;
 
-    private PlayerController playerController;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         controller = GetComponent<CharacterController>();
-        playerController = GetPlayerController();
     }
 
     public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
+        if (!isPossessed)
+            return;
+
         isGrounded = IsGrounded();
         Vector3 direction = CalculateDirection(movementInput);
         if (movementInput == Vector2.zero)
@@ -49,20 +51,20 @@ public class Character : Pawn
         Vector3 direction = Vector3.zero;
         if (movementInput.y > 0)
         {
-            Vector3 cameraForward = playerController.ActiveCamera.transform.forward;
+            Vector3 cameraForward = this.PlayerController.ActiveCamera.transform.forward;
             cameraForward.y = 0;
             direction = cameraForward.normalized;
         }
         else if (movementInput.y < 0)
         {
-            Vector3 cameraBackward = -playerController.ActiveCamera.transform.forward;
+            Vector3 cameraBackward = -this.PlayerController.ActiveCamera.transform.forward;
             cameraBackward.y = 0;
             direction = cameraBackward.normalized;
         }
 
         if (movementInput.x != 0)
         {
-            Vector3 cameraRight = playerController.ActiveCamera.transform.right;
+            Vector3 cameraRight = this.PlayerController.ActiveCamera.transform.right;
             direction += cameraRight * movementInput.x;
             direction.Normalize();
         }
@@ -72,11 +74,10 @@ public class Character : Pawn
     public virtual void RotateCharacter(Vector3 direction, Vector2 movementInput)
     {
         // Get PlayerController from the base class
-        PlayerController playerController = GetPlayerController();
 
         if (movementInput != Vector2.zero)
         {
-            Quaternion targetRotation = Quaternion.Euler(0, playerController.ActiveCamera.transform.eulerAngles.y, 0);
+            Quaternion targetRotation = Quaternion.Euler(0, this.PlayerController.ActiveCamera.transform.eulerAngles.y, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
         }
     }

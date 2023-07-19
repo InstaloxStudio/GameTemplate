@@ -56,18 +56,30 @@ public class GameMode : MonoBehaviour
 
         if (defaultPawn == null)
         {
+            //load prefab from Prefabs folder
+            defaultPawn = Instantiate(Resources.Load<Pawn>("DefaultPawn"), spawnPosition, Quaternion.identity);
+            //set the default pawn as the active character
+            playerController.Possess(defaultPawn);
+
+
             //spawn in the default pawn
-            GameObject pawnObject = new GameObject("DefaultPawn");
-            defaultPawn = pawnObject.AddComponent<DefaultPawn>();
-            GameObject cameraObject = new GameObject("Camera");
-            Camera camera = cameraObject.AddComponent<Camera>();
-            var freecam = cameraObject.AddComponent<FreeCamera>();
-            freecam.Camera = camera;
-            cameraObject.transform.SetParent(pawnObject.transform);
+            // GameObject pawnObject = new GameObject("DefaultPawn");
+            // defaultPawn = pawnObject.AddComponent<DefaultPawn>();
+            // GameObject cameraObject = new GameObject("Camera");
+            // Camera camera = cameraObject.AddComponent<Camera>();
+            // var freecam = cameraObject.AddComponent<FreeCamera>();
+            // freecam.Camera = camera;
+            // cameraObject.transform.SetParent(pawnObject.transform);
+            // playerController.Possess(defaultPawn);
+        }
+        else
+        {
+            //spawn in the default pawn
+            defaultCharacter = SpawnCharacter(defaultPawn.gameObject, spawnPosition);
         }
 
         // Spawn the default character
-        defaultCharacter = SpawnCharacter(defaultPawn.gameObject, spawnPosition);
+        // defaultCharacter = SpawnCharacter(defaultPawn.gameObject, spawnPosition);
 
     }
 

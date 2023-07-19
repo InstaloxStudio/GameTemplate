@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 4790253111477652245}
+  isPossessed: 0
   walkSpeed: 6
   runSpeed: 10
   airControlFactor: 0.9
@@ -313,7 +314,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6641516300170451964}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -364,7 +365,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6641516300170451964}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!114 &6091832541780690830
 MonoBehaviour:
   m_ObjectHideFlags: 0
