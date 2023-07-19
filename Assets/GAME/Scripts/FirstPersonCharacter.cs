@@ -23,5 +23,18 @@ public class FirstPersonCharacter : Character
 
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //find any other pawn and posses it
+            foreach (var pawn in GameMode.Instance.Pawns)
+            {
+                if (pawn != this)
+                {
+                    this.GetPlayerController().Possess(pawn);
+                    break;
+                }
+            }
+        }
     }
 }

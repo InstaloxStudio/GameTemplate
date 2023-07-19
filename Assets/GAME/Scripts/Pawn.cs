@@ -33,6 +33,8 @@ public class Pawn : MonoBehaviour, IControllable
     public virtual void Start()
     {
         this.PlayerController.RegisterControlledObject(this);
+        if (!isPossessed)
+            DisableCameraController();
     }
 
     public virtual void DisableCameraController()
@@ -40,6 +42,7 @@ public class Pawn : MonoBehaviour, IControllable
         if (cameraController != null)
         {
             cameraController.enabled = false;
+            isPossessed = false;
             //disable the camera
             if (cameraController.Camera != null)
             {
@@ -82,6 +85,7 @@ public class Pawn : MonoBehaviour, IControllable
         EnableCameraController();
         OnPossessed?.Invoke(playerController);
         isPossessed = true;
+        cameraController.IsPossessed = true;
     }
 
     // This method is called by the PlayerController when this pawn is unpossessed
@@ -90,6 +94,7 @@ public class Pawn : MonoBehaviour, IControllable
         DisableCameraController();
         OnUnpossessed?.Invoke(playerController);
         isPossessed = false;
+        cameraController.IsPossessed = false;
     }
 
 

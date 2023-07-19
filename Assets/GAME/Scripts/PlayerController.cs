@@ -73,16 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         if (activeCharacter != null)
         {
-            activeCharacter.Unpossessed(this);
-        }
-        if (cameraController != null)
-        {
-            cameraController = null;
-        }
-
-        if (activeCamera != null)
-        {
-            activeCamera = null;
+            Unpossess();
         }
 
         activeCharacter = pawn;
@@ -92,6 +83,8 @@ public class PlayerController : MonoBehaviour
         {
             activeCamera = cameraController.Camera;
             activeCamera.enabled = true;
+            cameraController.Target = pawn.cameraTarget;
+
         }
         else
         {
@@ -112,6 +105,7 @@ public class PlayerController : MonoBehaviour
         cameraController = null;
         activeCamera = null;
     }
+
 
     public Pawn GetActiveCharacter()
     {

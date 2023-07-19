@@ -12,6 +12,8 @@ public abstract class CameraController : MonoBehaviour, IControllable
     public Camera Camera { get { return cam; } set { cam = value; } }
 
     public Pawn ControlledPawn { get { return GameMode.Instance.GetPlayerController().GetCharacter; } }
+    public bool IsPossessed { get; set; }
+
 
     protected virtual void Start()
     {
@@ -27,7 +29,8 @@ public abstract class CameraController : MonoBehaviour, IControllable
 
     protected virtual void Update()
     {
-        HandleCameraUpdate();
+        if (IsPossessed)
+            HandleCameraUpdate();
     }
 
     public abstract void HandleCameraUpdate();
