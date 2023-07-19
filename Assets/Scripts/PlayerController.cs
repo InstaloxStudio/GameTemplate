@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     protected CameraController cameraController;
     public CameraController CameraController { get { return cameraController; } }
-
+    public Pawn GetCharacter => activeCharacter;
     public List<IControllable> controlledObjects = new List<IControllable>();
 
     void Update()
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         cameraController = activeCharacter.CameraController;
         if (cameraController != null)
         {
-            activeCamera = cameraController.Cam;
+            activeCamera = cameraController.Camera;
             activeCamera.enabled = true;
         }
         else

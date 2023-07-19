@@ -7,17 +7,11 @@ public abstract class CameraController : MonoBehaviour, IControllable
 {
     protected Transform target; // The target that the camera should follow (usually the player)
     [SerializeField]
-    protected Camera cam; // The camera that is being controlled
-    public Transform Target
-    {
-        get { return target; }
-        set { target = value; }
-    }
-    public Camera Cam
-    {
-        get { return cam; }
-        set { cam = value; }
-    }
+    private Camera cam; // The camera that is being controlled
+    public Transform Target { get { return target; } set { target = value; } }
+    public Camera Camera { get { return cam; } set { cam = value; } }
+
+    public Pawn ControlledPawn { get { return GameMode.Instance.GetPlayerController().GetCharacter; } }
 
     protected virtual void Start()
     {

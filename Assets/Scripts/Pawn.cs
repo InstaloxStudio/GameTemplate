@@ -10,8 +10,8 @@ public class Pawn : MonoBehaviour, IControllable
 {
 
     //event for when the pawn is possessed
-    public Action<PlayerController> OnPossessed;
-    public Action<PlayerController> OnUnpossessed;
+    public event Action<PlayerController> OnPossessed;
+    public event Action<PlayerController> OnUnpossessed;
 
     public Transform cameraTarget;
 
@@ -42,9 +42,9 @@ public class Pawn : MonoBehaviour, IControllable
         {
             cameraController.enabled = false;
             //disable the camera
-            if (cameraController.Cam != null)
+            if (cameraController.Camera != null)
             {
-                cameraController.Cam.enabled = false;
+                cameraController.Camera.enabled = false;
                 cameraController.GetComponent<AudioListener>().enabled = false;
             }
         }
@@ -56,9 +56,9 @@ public class Pawn : MonoBehaviour, IControllable
         {
             cameraController.enabled = true;
             //enable the camera
-            if (cameraController.Cam != null)
+            if (cameraController.Camera != null)
             {
-                cameraController.Cam.enabled = true;
+                cameraController.Camera.enabled = true;
                 cameraController.GetComponent<AudioListener>().enabled = true;
             }
         }
@@ -103,20 +103,14 @@ public class Pawn : MonoBehaviour, IControllable
     public virtual void Possessed(PlayerController playerController)
     {
         EnableCameraController();
-        if (OnPossessed != null)
-        {
-            OnPossessed(playerController);
-        }
+        OnPossessed?.Invoke(playerController);
     }
 
     // This method is called by the PlayerController when this pawn is unpossessed
     public virtual void Unpossessed(PlayerController playerController)
     {
         DisableCameraController();
-        if (OnUnpossessed != null)
-        {
-            OnUnpossessed(playerController);
-        }
+        OnUnpossessed?.Invoke(playerController);
     }
 
 

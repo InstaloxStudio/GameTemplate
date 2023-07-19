@@ -62,7 +62,7 @@ public class GameMode : MonoBehaviour
             GameObject cameraObject = new GameObject("Camera");
             Camera camera = cameraObject.AddComponent<Camera>();
             var freecam = cameraObject.AddComponent<FreeCamera>();
-            freecam.Cam = camera;
+            freecam.Camera = camera;
             cameraObject.transform.SetParent(pawnObject.transform);
         }
 
