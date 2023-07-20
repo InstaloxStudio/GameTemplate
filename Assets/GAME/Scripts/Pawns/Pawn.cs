@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// Base class for all pawns, which are objects that can be possessed by the player controller
+/// Base class for all pawns, which are objects that can be possessed by a controller.
 /// </summary>
 public class Pawn : MonoBehaviour, IControllable
 {
@@ -96,7 +96,6 @@ public class Pawn : MonoBehaviour, IControllable
         isPossessed = false;
         cameraController.IsPossessed = false;
     }
-
 
 
 }

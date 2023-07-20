@@ -12,8 +12,6 @@ public class FirstPersonCamera : CameraController
     public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
         //only run if the pawn is possessed
-        //print controlled pawn
-
         if (IsPossessed)
             HandleRotation(rotationInput);
     }

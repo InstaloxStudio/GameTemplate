@@ -14,7 +14,6 @@ public abstract class CameraController : MonoBehaviour, IControllable
     public Pawn ControlledPawn { get { return GameMode.Instance.GetPlayerController().GetCharacter; } }
     public bool IsPossessed { get; set; }
 
-
     protected virtual void Start()
     {
         PlayerController playerController = GameMode.Instance.GetPlayerController();
@@ -23,7 +22,6 @@ public abstract class CameraController : MonoBehaviour, IControllable
             target = playerController.GetActiveCharacter().cameraTarget;
             //register 
             playerController.RegisterControlledObject(this);
-
         }
     }
 
@@ -44,6 +42,4 @@ public abstract class CameraController : MonoBehaviour, IControllable
             playerController.UnregisterControlledObject(this);
         }
     }
-
-
 }

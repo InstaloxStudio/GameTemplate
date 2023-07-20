@@ -9,7 +9,7 @@ using UnityEngine;
 ///summary
 public class PlayerController : MonoBehaviour
 {
-    public Pawn activeCharacter;
+    public Pawn possessedPawn;
     private Vector2 movementInput;
     private Vector2 rotationInput;
     private bool jumpInput;
@@ -19,13 +19,13 @@ public class PlayerController : MonoBehaviour
     public bool JumpInput { get { return jumpInput; } }
 
     [SerializeField]
-    private Camera activeCamera;
+    private Camera possessedCamera;
 
-    public Camera ActiveCamera { get { return activeCamera; } }
+    public Camera PossessedCamera { get { return possessedCamera; } }
 
     protected CameraController cameraController;
     public CameraController CameraController { get { return cameraController; } }
-    public Pawn GetCharacter => activeCharacter;
+    public Pawn GetCharacter => possessedPawn;
     public List<IControllable> controlledObjects = new List<IControllable>();
 
     //fields for raycasting to the mouse
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         jumpInput = Input.GetButtonDown("Jump");
 
         //raycast to the mouse position to get the world position
-        ray = activeCamera.ScreenPointToRay(Input.mousePosition);
+        ray = possessedCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out mouseHit))
         {
             mousePosition = mouseHit.point;
@@ -67,22 +67,30 @@ public class PlayerController : MonoBehaviour
         {
             cameraController.HandleCameraUpdate();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //grab a random pawn and posses it
+            int randomIndex = Random.Range(0, GameMode.Instance.Pawns.Count);
+            if (GameMode.Instance.Pawns[randomIndex] != possessedPawn)
+                Possess(GameMode.Instance.Pawns[randomIndex]);
+        }
     }
 
     public void Possess(Pawn pawn)
     {
-        if (activeCharacter != null)
+        if (possessedPawn != null)
         {
             Unpossess();
         }
 
-        activeCharacter = pawn;
+        possessedPawn = pawn;
 
-        cameraController = activeCharacter.CameraController;
+        cameraController = possessedPawn.CameraController;
         if (cameraController != null)
         {
-            activeCamera = cameraController.Camera;
-            activeCamera.enabled = true;
+            possessedCamera = cameraController.Camera;
+            possessedCamera.enabled = true;
             cameraController.Target = pawn.cameraTarget;
 
         }
@@ -90,26 +98,26 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("CameraController is missing on the activeCharacter GameObject");
         }
-        activeCharacter.Possessed(this);
+        possessedPawn.Possessed(this);
 
     }
 
     public void Unpossess()
     {
-        if (activeCharacter != null)
+        if (possessedPawn != null)
         {
-            activeCharacter.Unpossessed(this);
+            possessedPawn.Unpossessed(this);
         }
 
-        activeCharacter = null;
+        possessedPawn = null;
         cameraController = null;
-        activeCamera = null;
+        possessedCamera = null;
     }
 
 
     public Pawn GetActiveCharacter()
     {
-        return activeCharacter;
+        return possessedPawn;
     }
 
     public void RegisterControlledObject(IControllable controlledObject)
