@@ -9,6 +9,12 @@ public class AggressiveAIPawn : AIPawn
     {
         base.Start();
         AIController = new AggressiveAIController(this);
+
+        //if player is null find any pawn
+        if (player == null)
+        {
+            player = FindObjectOfType<Pawn>().transform;
+        }
     }
 
     public void AttackPlayer()

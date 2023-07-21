@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 MousePosition => mousePosition;
     public RaycastHit MouseHit => mouseHit;
 
+    [Header("Cursor Settings")]
+    [SerializeField]
     private bool isMouseLocked = false;
+    [SerializeField]
     private bool isMouseVisible = true;
 
     public bool IsMouseLocked => isMouseLocked;

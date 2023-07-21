@@ -21,7 +21,7 @@ public class GameMode : MonoBehaviour
     //list of all pawns in the scene
     public List<Pawn> Pawns = new List<Pawn>();
 
-    void Awake()
+    public virtual void Awake()
     {
         Instance = this;
 
@@ -68,7 +68,7 @@ public class GameMode : MonoBehaviour
         }
     }
 
-    public Pawn SpawnCharacter(GameObject prefab, Vector3 spawnPosition)
+    public virtual Pawn SpawnCharacter(GameObject prefab, Vector3 spawnPosition)
     {
         GameObject characterObject = Instantiate(prefab, spawnPosition, Quaternion.identity);
         Pawn newCharacter = characterObject.GetComponent<Pawn>();
