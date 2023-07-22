@@ -1,6 +1,5 @@
 ### Game Framework ###
-This is an all-encompassing game development framework built in Unity. The framework was developed with extensibility, modularity, and reusability in mind. It provides a strong base for rapid game development and prototyping while remaining adaptable for use in full production.
-
+This framework is based on Unreal Engine's Gameplay Framework. It is designed to be a starting point for any game, providing a robust set of systems and classes to build upon.
 ### Features ###
 Game Modes and States: The framework provides an abstract GameMode class to dictate the rules of your game, such as victory conditions, number of players, etc.
 
