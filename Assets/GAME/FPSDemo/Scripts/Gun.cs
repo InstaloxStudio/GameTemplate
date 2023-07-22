@@ -12,14 +12,17 @@ public class Gun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
-            // If we hit something, we check if it has a health component
-            var health = hit.collider.GetComponent<Health>();
-            if (health != null)
+            // If we hit something, we check if it has a damageable component
+            Damageable damageable = hit.collider.GetComponent<Damageable>();
+            if (damageable != null)
             {
-                // If it does, we damage it
-                health.TakeDamage(damage);
-            }
+                //create damagesource
+                DamageSource damageSource = new DamageSource(damage, DamageType.Generic);
 
+
+                // If it does, we deal damage to it
+                damageable.TakeDamage(damageSource);
+            }
         }
     }
 }

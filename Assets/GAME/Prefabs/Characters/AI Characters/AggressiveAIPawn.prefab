@@ -119,8 +119,9 @@ GameObject:
   - component: {fileID: 3377061876425136629}
   - component: {fileID: 5282232752424084140}
   - component: {fileID: 3177040438755887221}
-  - component: {fileID: -8764224385008192077}
   - component: {fileID: -932823237768957547}
+  - component: {fileID: 3808759943385986741}
+  - component: {fileID: 5419409155512091339}
   m_Layer: 0
   m_Name: AggressiveAIPawn
   m_TagString: Untagged
@@ -180,19 +181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   detectionRadius: 10
---- !u!114 &-8764224385008192077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5387381367437889479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c48ff57795dbbf43939f187bcebee8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
 --- !u!136 &-932823237768957547
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -216,6 +204,32 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3808759943385986741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387381367437889479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030784dd8db522648b5fd50ad5e7f20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5419409155512091339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387381367437889479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1515ea040145eb4c879a157da4c01e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
 --- !u!1 &5592576754629571353
 GameObject:
   m_ObjectHideFlags: 0

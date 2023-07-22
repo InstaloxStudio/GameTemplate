@@ -3,6 +3,20 @@ using UnityEngine;
 public class FPSDemoCharacter : Character
 {
     public Gun gun; // assign this in the inspector
+    public PlayerData playerData;
+    public HealthComponent healthComponent;
+
+    public Damageable damageable;
+
+    public override void Start()
+    {
+        base.Start();
+        // Set the player's health to the value in the player data
+        this.healthComponent = GetComponent<HealthComponent>();
+        playerData.health = this.healthComponent.Health;
+        playerData.kills = 0;
+        damageable = GetComponent<Damageable>();
+    }
 
     public override void RotateCharacter(Vector3 direction, Vector2 movementInput)
     {
@@ -11,6 +25,10 @@ public class FPSDemoCharacter : Character
 
     void Update()
     {
+        //set player data
+        playerData.health = this.healthComponent.Health;
+        playerData.kills = (FPSGameMode.Instance as FPSGameMode).CurrentKills;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             this.GetPlayerController().SetMouseLock(true);

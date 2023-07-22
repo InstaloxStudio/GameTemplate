@@ -226,6 +226,8 @@ GameObject:
   - component: {fileID: 7125643802297608794}
   - component: {fileID: 7736351810226683594}
   - component: {fileID: 5660496787455571683}
+  - component: {fileID: 5972369036681135558}
+  - component: {fileID: -8127020098500494572}
   m_Layer: 0
   m_Name: FPSDemoCharacter
   m_TagString: Untagged
@@ -300,6 +302,35 @@ MonoBehaviour:
   isGrounded: 0
   groundCheckDistance: 0.1
   gun: {fileID: 5423143377893976848}
+  playerData: {fileID: 11400000, guid: 4fdd0d08c549b2a4fb76f85916a2de04, type: 2}
+  healthComponent: {fileID: 5972369036681135558}
+  damageable: {fileID: -8127020098500494572}
+--- !u!114 &5972369036681135558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083546284303680837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1515ea040145eb4c879a157da4c01e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 100
+--- !u!114 &-8127020098500494572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083546284303680837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030784dd8db522648b5fd50ad5e7f20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8118762571475087021
 GameObject:
   m_ObjectHideFlags: 0
