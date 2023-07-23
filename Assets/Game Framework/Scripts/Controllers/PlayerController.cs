@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            if (GameMode.Instance.Pawns.Count <= 0)
+                return;
             //grab a random pawn and posses it
             int randomIndex = Random.Range(0, GameMode.Instance.Pawns.Count);
             if (GameMode.Instance.Pawns[randomIndex] != possessedPawn)

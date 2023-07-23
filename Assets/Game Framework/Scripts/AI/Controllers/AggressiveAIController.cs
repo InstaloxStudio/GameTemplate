@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AggressiveAIController : AIController
 {
+    bool isPlayerInRange = false;
     public AggressiveAIController(AIPawn pawn) : base(pawn)
     {
     }
@@ -16,13 +17,7 @@ public class AggressiveAIController : AIController
     {
         base.Update();
         AggressiveAIPawn aggressivePawn = (AggressiveAIPawn)Pawn;
-        if (aggressivePawn.IsPlayerInRange())
-        {
-            aggressivePawn.ChangeState(new AttackState());
-        }
-        else
-        {
-            aggressivePawn.ChangeState(new IdleState());
-        }
+        isPlayerInRange = aggressivePawn.IsPlayerInRange();
+
     }
 }
