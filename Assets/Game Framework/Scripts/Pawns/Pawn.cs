@@ -13,11 +13,14 @@ public class Pawn : MonoBehaviour, IControllable
     public event Action<PlayerController> OnPossessed;
     public event Action<PlayerController> OnUnpossessed;
 
+    public event Action<Pawn> OnDeathEvent;
     public Transform cameraTarget;
 
     private CameraController cameraController;
     public CameraController CameraController { get { return cameraController; } }
     public PlayerController PlayerController { get { return GameMode.Instance.GetPlayerController(); } }
+
+    public bool DestroyOnDeath = true;
 
     public virtual void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
@@ -97,5 +100,10 @@ public class Pawn : MonoBehaviour, IControllable
         cameraController.IsPossessed = false;
     }
 
-
+    public virtual void OnDeath()
+    {
+        OnDeathEvent?.Invoke(this);
+        if (DestroyOnDeath)
+            Destroy(gameObject);
+    }
 }

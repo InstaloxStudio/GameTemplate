@@ -1,38 +1,22 @@
-public class IdleState : IAIState
+public class IdleState : IAIState<AggressiveAIPawn>
 {
-    public void Enter(AIPawn pawn)
+    public void Enter(AggressiveAIPawn pawn)
     {
-        if (pawn is FriendlyAIPawn)
-            pawn.StopAgent();
+        //set state text
+        pawn.stateText.text = "Idle";
+        pawn.StopAgent();
+    }
 
-        if (pawn is AggressiveAIPawn)
+    public void Execute(AggressiveAIPawn pawn)
+    {
+        if (pawn.IsPlayerInRange())
         {
-            //set state text
-            ((AggressiveAIPawn)pawn).stateText.text = "Idle";
-
-            pawn.StopAgent();
+            pawn.ChangeState(new ChaseState());
         }
     }
 
-    public void Execute(AIPawn pawn)
+    public void Exit(AggressiveAIPawn pawn)
     {
-        if (pawn is AggressiveAIPawn)
-        {
-            if (((AggressiveAIPawn)pawn).IsPlayerInRange())
-            {
-                pawn.ChangeState(new AimAtPlayerState());
-            }
-        }
-    }
-
-    public void Exit(AIPawn pawn)
-    {
-        if (pawn is FriendlyAIPawn)
-            pawn.ResumeAgent();
-
-        if (pawn is AggressiveAIPawn)
-        {
-            pawn.ResumeAgent();
-        }
+        pawn.ResumeAgent();
     }
 }

@@ -1,28 +1,27 @@
 using UnityEngine;
 
-public class FriendlyAIController : AIController
+public class FriendlyAIController : AIController<FriendlyAIPawn>
 {
-    public FriendlyAIController(AIPawn pawn) : base(pawn)
+    public FriendlyAIController(FriendlyAIPawn pawn) : base(pawn)
     {
     }
 
     public override void Initialize()
     {
         base.Initialize();
-        Pawn.ChangeState(new IdleState());
+        //  Pawn.ChangeState(new IdleState());
     }
 
     public override void Update()
     {
         base.Update();
-        FriendlyAIPawn friendlyPawn = (FriendlyAIPawn)Pawn;
-        if (friendlyPawn.IsPlayerTooFar())
+        if (pawn.IsPlayerTooFar())
         {
-            friendlyPawn.ChangeState(new FollowPlayerState());
+            //pawn.ChangeState(new FollowPlayerState());
         }
         else
         {
-            friendlyPawn.ChangeState(new IdleState());
+            // pawn.ChangeState(new IdleState());
         }
     }
 }

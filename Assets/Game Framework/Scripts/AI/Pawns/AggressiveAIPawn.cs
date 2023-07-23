@@ -2,23 +2,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
-public class AggressiveAIPawn : AIPawn
+public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
 {
     public TMPro.TextMeshPro stateText;  // Reference to the text that displays the current state
     public Transform player;  // Reference to the player
     public float detectionRadius = 100f;  // Radius in which the pawn can detect the player
 
-
+    public float attackRange = 50f;
 
     protected override void Start()
     {
-        base.Start();
 
         //create text object and position it above the pawn
         stateText = GetComponentInChildren<TMPro.TextMeshPro>();
 
 
         AIController = new AggressiveAIController(this);
+        AIController.Initialize();
 
         //if player is null find any pawn
         if (player == null)
@@ -60,8 +60,6 @@ public class AggressiveAIPawn : AIPawn
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-        if (IsFacingPlayer())
-            ChangeState(new ChaseState());
     }
 
     public bool IsFacingPlayer()
@@ -73,5 +71,10 @@ public class AggressiveAIPawn : AIPawn
     public bool IsPlayerInRange()
     {
         return Vector3.Distance(transform.position, player.position) <= detectionRadius;
+    }
+
+    public bool IsPlayerInAttackRange()
+    {
+        return Vector3.Distance(transform.position, player.position) <= attackRange;
     }
 }

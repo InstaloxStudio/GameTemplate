@@ -1,18 +1,18 @@
-public class AimAtPlayerState : IAIState
+public class AimAtPlayerState : IAIState<AggressiveAIPawn>
 {
-    public void Enter(AIPawn pawn)
+    public void Enter(AggressiveAIPawn pawn)
     {
-        ((AggressiveAIPawn)pawn).stateText.text = "aiming";
+        pawn.stateText.text = "aiming";
 
     }
 
-    public void Execute(AIPawn pawn)
+    public void Execute(AggressiveAIPawn pawn)
     {
-        ((AggressiveAIPawn)pawn).AimAtPlayer();
+        pawn.AimAtPlayer();
 
     }
 
-    public void Exit(AIPawn pawn)
+    public void Exit(AggressiveAIPawn pawn)
     {
     }
 }

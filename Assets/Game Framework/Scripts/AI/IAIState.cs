@@ -1,6 +1,7 @@
-public interface IAIState
+
+public interface IAIState<T> where T : AIPawn<T>
 {
-    void Enter(AIPawn pawn);
-    void Execute(AIPawn pawn);
-    void Exit(AIPawn pawn);
+    void Enter(T pawn);
+    void Execute(T pawn);
+    void Exit(T pawn);
 }

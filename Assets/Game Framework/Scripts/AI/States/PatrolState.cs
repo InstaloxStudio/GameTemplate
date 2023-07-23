@@ -1,22 +1,21 @@
-public class PatrolState : IAIState
+public class PatrolState : IAIState<PatrollingAIPawn>
 {
-    public void Enter(AIPawn pawn)
+    public void Enter(PatrollingAIPawn pawn)
     {
-        ((PatrollingAIPawn)pawn).MoveToNextWaypoint();
+        pawn.MoveToNextWaypoint();
     }
 
-    public void Execute(AIPawn pawn)
+    public void Execute(PatrollingAIPawn pawn)
     {
-        if (pawn is PatrollingAIPawn patrolPawn)
+
+        if (pawn.Agent.remainingDistance <= pawn.Agent.stoppingDistance)
         {
-            if (patrolPawn.Agent.remainingDistance <= patrolPawn.Agent.stoppingDistance)
-            {
-                patrolPawn.MoveToNextWaypoint();
-            }
+            pawn.MoveToNextWaypoint();
         }
+
     }
 
-    public void Exit(AIPawn pawn)
+    public void Exit(PatrollingAIPawn pawn)
     {
     }
 }

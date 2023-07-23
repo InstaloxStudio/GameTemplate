@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class AIController
+public abstract class AIController<T> where T : AIPawn<T>
 {
-    protected AIPawn pawn;
+    protected T pawn;
 
-    public AIPawn Pawn { get { return pawn; } set { pawn = value; } }
+    public T Pawn { get { return pawn; } set { pawn = value; } }
 
-    public AIController(AIPawn pawn)
+    public AIController(T pawn)
     {
         this.pawn = pawn;
     }

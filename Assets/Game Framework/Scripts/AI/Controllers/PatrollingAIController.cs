@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PatrollingAIController : AIController
+public class PatrollingAIController : AIController<PatrollingAIPawn>
 {
-    public PatrollingAIController(AIPawn pawn) : base(pawn)
+    public PatrollingAIController(PatrollingAIPawn pawn) : base(pawn)
     {
     }
 

@@ -1,15 +1,15 @@
-public class FollowPlayerState : IAIState
+public class FollowPlayerState : IAIState<FriendlyAIPawn>
 {
-    public void Enter(AIPawn pawn)
+    public void Enter(FriendlyAIPawn pawn)
     {
-        ((FriendlyAIPawn)pawn).FollowPlayer();
+        pawn.FollowPlayer();
     }
 
-    public void Execute(AIPawn pawn)
+    public void Execute(FriendlyAIPawn pawn)
     {
     }
 
-    public void Exit(AIPawn pawn)
+    public void Exit(FriendlyAIPawn pawn)
     {
     }
 }

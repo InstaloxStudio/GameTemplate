@@ -6,6 +6,7 @@ public class HealthComponent : MonoBehaviour
     public float health = 100f;
 
     public event System.Action<Pawn> OnDeath;
+
     public float HealthPercentage
     {
         get
@@ -43,7 +44,18 @@ public class HealthComponent : MonoBehaviour
 
     void Die()
     {
-        OnDeath?.Invoke(this.GetComponent<Pawn>());
-        Destroy(gameObject);
+        Pawn pawn = this.GetComponent<Pawn>();
+        if (pawn != null)
+        {
+            pawn.OnDeath();
+            OnDeath?.Invoke(pawn);
+            if (pawn.DestroyOnDeath)
+                Destroy(pawn);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
     }
 }

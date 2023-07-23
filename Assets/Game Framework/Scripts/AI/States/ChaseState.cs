@@ -1,29 +1,24 @@
-public class ChaseState : IAIState
+public class ChaseState : IAIState<AggressiveAIPawn>
 {
-    public void Enter(AIPawn pawn)
+    public void Enter(AggressiveAIPawn pawn)
     {
         pawn.ResumeAgent();
-        ((AggressiveAIPawn)pawn).stateText.text = "chase";
+        pawn.stateText.text = "chase";
 
     }
 
-    public void Execute(AIPawn pawn)
+    public void Execute(AggressiveAIPawn pawn)
     {
 
-        if (pawn is AggressiveAIPawn)
+        //set destination to player  
+        pawn.MoveToPlayer();
+        if (pawn.IsPlayerInAttackRange())
         {
-            //set destination to player        {
-            ((AggressiveAIPawn)pawn).MoveToPlayer();
-
-            if (((AggressiveAIPawn)pawn).IsPlayerInRange())
-            {
-                pawn.ChangeState(new AttackState());
-            }
+            pawn.ChangeState(new AttackState());
         }
     }
 
-    public void Exit(AIPawn pawn)
+    public void Exit(AggressiveAIPawn pawn)
     {
-        pawn.StopAgent();
     }
 }

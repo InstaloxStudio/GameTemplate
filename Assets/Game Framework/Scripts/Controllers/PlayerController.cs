@@ -45,9 +45,12 @@ public class PlayerController : MonoBehaviour
     public bool IsMouseLocked => isMouseLocked;
     public bool IsMouseVisible => isMouseVisible;
 
-
+    private bool hasInput = true;
+    public bool HasInput => hasInput;
     void Update()
     {
+        if (!hasInput)
+            return;
 
         //send all input to the active character
         movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -203,6 +206,16 @@ public class PlayerController : MonoBehaviour
         {
             UnlockMouse();
         }
+    }
+
+    public virtual void DisableInput()
+    {
+        hasInput = false;
+    }
+
+    public virtual void EnableInput()
+    {
+        hasInput = true;
     }
 }
 

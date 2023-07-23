@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FPSGameMode : GameMode
 {
@@ -16,6 +17,8 @@ public class FPSGameMode : GameMode
         if (pawn is FPSDemoCharacter)
         {
             // The player died, restart the game
+            Debug.Log("You died!");
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
     }

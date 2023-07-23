@@ -1,37 +1,37 @@
 using UnityEngine;
 
-public class AttackState : IAIState
+public class AttackState : IAIState<AggressiveAIPawn>
 {
     public float attackTime = 1f;
     private float attackTimer = 0f;
-
-    public void Enter(AIPawn pawn)
+    public void Enter(AggressiveAIPawn pawn)
     {
         attackTimer = attackTime;
-        ((AggressiveAIPawn)pawn).stateText.text = "attack";
+        pawn.stateText.text = "attack";
 
     }
 
-    public void Execute(AIPawn pawn)
+    public void Execute(AggressiveAIPawn pawn)
     {
-        if (((AggressiveAIPawn)pawn).IsPlayerInRange())
+        if (pawn.IsPlayerInRange())
         {
-            //check if we are facing player
-            if (((AggressiveAIPawn)pawn).IsFacingPlayer())
+            if (pawn.IsPlayerInAttackRange())
             {
-                attackTimer -= Time.deltaTime;
-                if (attackTimer <= 0f)
+                if (pawn.IsFacingPlayer())
                 {
-                    //shoot bullet at player
-                    ((AggressiveAIPawn)pawn).Shoot();
-                    attackTimer = attackTime;
+                    attackTimer -= Time.deltaTime;
+                    if (attackTimer <= 0f)
+                    {
+                        //shoot bullet at player
+                        pawn.Shoot();
+                        attackTimer = attackTime;
+                    }
+                }
+                else
+                {
+                    pawn.AimAtPlayer();
                 }
             }
-            else
-            {
-                pawn.ChangeState(new AimAtPlayerState());
-            }
-
         }
         else
         {
@@ -39,7 +39,7 @@ public class AttackState : IAIState
         }
     }
 
-    public void Exit(AIPawn pawn)
+    public void Exit(AggressiveAIPawn pawn)
     {
     }
 }

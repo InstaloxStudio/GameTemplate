@@ -11,6 +11,7 @@ public class FPSDemoCharacter : Character
     public override void Start()
     {
         base.Start();
+        this.DestroyOnDeath = false;
         // Set the player's health to the value in the player data
         this.healthComponent = GetComponent<HealthComponent>();
         playerData.health = this.healthComponent.Health;
@@ -29,6 +30,9 @@ public class FPSDemoCharacter : Character
         playerData.health = this.healthComponent.Health;
         playerData.kills = (FPSGameMode.Instance as FPSGameMode).CurrentKills;
 
+        if (!GetPlayerController().HasInput)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             this.GetPlayerController().SetMouseLock(true);
@@ -37,8 +41,16 @@ public class FPSDemoCharacter : Character
 
         if (Input.GetMouseButtonDown(0))
         {
-            // Instead of spawning a cube, we shoot our gun
             gun.Shoot();
         }
+    }
+
+    override public void OnDeath()
+    {
+        // Call the base class's OnDeath method
+        base.OnDeath();
+        var gamemode = GameMode.Instance;
+        gamemode.GetPlayerController().DisableInput();
+        gamemode.GetPlayerController().SetMouseLock(false);
     }
 }

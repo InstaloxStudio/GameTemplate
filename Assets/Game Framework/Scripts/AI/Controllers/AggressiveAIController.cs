@@ -1,23 +1,23 @@
 using UnityEngine;
 
-public class AggressiveAIController : AIController
+public class AggressiveAIController : AIController<AggressiveAIPawn>
 {
     bool isPlayerInRange = false;
-    public AggressiveAIController(AIPawn pawn) : base(pawn)
+    bool IsPlayerInAttackRange = false;
+
+    public AggressiveAIController(AggressiveAIPawn pawn) : base(pawn)
     {
     }
-
     public override void Initialize()
     {
         base.Initialize();
-        Pawn.ChangeState(new IdleState());
+        pawn.ChangeState(new IdleState());
     }
 
     public override void Update()
     {
         base.Update();
-        AggressiveAIPawn aggressivePawn = (AggressiveAIPawn)Pawn;
-        isPlayerInRange = aggressivePawn.IsPlayerInRange();
-
+        IsPlayerInAttackRange = pawn.IsPlayerInAttackRange();
+        isPlayerInRange = pawn.IsPlayerInRange();
     }
 }

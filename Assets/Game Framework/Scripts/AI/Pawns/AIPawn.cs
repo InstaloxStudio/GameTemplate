@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
-public abstract class AIPawn : MonoBehaviour
+public abstract class AIPawn<T> : MonoBehaviour where T : AIPawn<T>
 {
-    protected AIController controller;
+    protected AIController<T> controller;
 
-    private IAIState currentState;
+    private IAIState<T> currentState;
 
-    public AIController AIController
+    public AIController<T> AIController
     {
         get => controller;
         set
@@ -25,24 +25,24 @@ public abstract class AIPawn : MonoBehaviour
     protected NavMeshAgent agent;
     public NavMeshAgent Agent => agent;
 
-    protected virtual void Start()
+    virtual protected void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        AIController = new AIController(this);
-        AIController.Initialize();
     }
+
+    protected abstract void Start();
 
     private void Update()
     {
         AIController.Update();
-        currentState?.Execute(this);
+        currentState?.Execute((T)this);
     }
 
-    public void ChangeState(IAIState newState)
+    public void ChangeState(IAIState<T> newState)
     {
-        currentState?.Exit(this);
+        currentState?.Exit((T)this);
         currentState = newState;
-        currentState?.Enter(this);
+        currentState?.Enter((T)this);
     }
 
     public virtual void StopAgent()

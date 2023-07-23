@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FriendlyAIPawn : AIPawn
+public class FriendlyAIPawn : AIPawn<FriendlyAIPawn>
 {
     public Transform player; // Reference to the player's transform
     public float followDistance = 5f; // Distance at which the pawn starts following the player
@@ -9,8 +9,8 @@ public class FriendlyAIPawn : AIPawn
 
     protected override void Start()
     {
-        base.Start();
         AIController = new FriendlyAIController(this);
+        AIController.Initialize();
     }
 
     public void FollowPlayer()

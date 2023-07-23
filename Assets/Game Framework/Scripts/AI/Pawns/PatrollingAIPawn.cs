@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PatrollingAIPawn : AIPawn
+public class PatrollingAIPawn : AIPawn<PatrollingAIPawn>
 {
     public Transform[] waypoints;  // Array of waypoints
     [SerializeField]
@@ -9,8 +9,8 @@ public class PatrollingAIPawn : AIPawn
 
     protected override void Start()
     {
-        base.Start();
         AIController = new PatrollingAIController(this);
+        AIController.Initialize();
     }
 
     public void MoveToNextWaypoint()
