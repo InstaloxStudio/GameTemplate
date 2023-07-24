@@ -21,7 +21,7 @@ public class ThirdPersonCamera : CameraController
     [SerializeField]
     private PlayerController playerController;
 
-
+    public bool lockLookAt = false;
     public override void HandleCameraUpdate()
     {
 
@@ -45,6 +45,9 @@ public class ThirdPersonCamera : CameraController
         currentX = Mathf.SmoothDamp(currentX, targetX, ref xRotationV, xRotationSmoothTime);
         currentY = Mathf.SmoothDamp(currentY, targetY, ref yRotationV, yRotationSmoothTime);
         cameraBoom.transform.rotation = Quaternion.Euler(currentY, currentX, 0);
+        if (lockLookAt)
+            this.Camera.transform.LookAt(target);
+
     }
 
     public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)

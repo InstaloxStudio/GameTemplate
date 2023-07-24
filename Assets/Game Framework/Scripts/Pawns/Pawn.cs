@@ -38,6 +38,8 @@ public class Pawn : MonoBehaviour, IControllable
         this.PlayerController.RegisterControlledObject(this);
         if (!isPossessed)
             DisableCameraController();
+
+        this.Initialize();
     }
 
     public virtual void DisableCameraController()
@@ -105,5 +107,10 @@ public class Pawn : MonoBehaviour, IControllable
         OnDeathEvent?.Invoke(this);
         if (DestroyOnDeath)
             Destroy(gameObject);
+    }
+
+    public virtual void Initialize()
+    {
+        // This method should be overridden by the subclasses to define the behavior
     }
 }

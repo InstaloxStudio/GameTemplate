@@ -29,6 +29,8 @@ public class RigidBodyCharacter : Pawn
     public float airControlTime = 0.5f;
     public float airControlTimer = 0f;
     public float currentSpeed = 0f;
+
+    public bool lockRotation = false;
     public override void Start()
     {
         base.Start();
@@ -92,6 +94,12 @@ public class RigidBodyCharacter : Pawn
     public virtual void RotateCharacter(Vector3 direction, Vector2 movementInput)
     {
         // Get PlayerController from the base class
+        if (lockRotation)
+        {
+            Quaternion targetRotation = Quaternion.Euler(0, this.PlayerController.PossessedCamera.transform.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+            return;
+        }
 
         if (movementInput != Vector2.zero)
         {
@@ -151,10 +159,22 @@ public class RigidBodyCharacter : Pawn
             return false;
 
         }
-
-
     }
 
+    public virtual RaycastHit CheckGround()
+    {
+        RaycastHit hit;
+        Collider collider = GetComponent<Collider>();
+        float sphereRadius = collider.bounds.extents.y;
+        Vector3 sphereOrigin = transform.position + Vector3.up * (sphereRadius + 0.05f); // Start just above the bottom of the collider
 
-
+        if (Physics.SphereCast(sphereOrigin, sphereRadius, -Vector3.up, out hit, groundCheckDistance + 0.05f)) // Cast downwards
+        {
+            return hit;
+        }
+        else
+        {
+            return hit;
+        }
+    }
 }
