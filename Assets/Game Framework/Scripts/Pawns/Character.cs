@@ -6,20 +6,27 @@ using UnityEngine;
 /// </summary>
 public class Character : Pawn
 {
+    [Header("Movement")]
     public float walkSpeed = 6.0f;
     public float runSpeed = 10f;
-
-    public float airControlFactor = .2f;
     public float turnSpeed = 100.0f;
-    public float jumpHeight = 2.0f;
-    public float gravity = -9.81f;
 
+    [Header("Air Control")]
+    public float airControlFactor = .2f;
+    public float jumpHeight = 2.0f;
+
+    [Header("Physics")]
+    public float gravity = -9.81f;
+    public float groundCheckDistance = 0.1f;
+
+    [Header("Input")]
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    [Header("Controller")]
     private CharacterController controller;
     private Vector3 velocity;
     public bool isGrounded;
-    public float groundCheckDistance = 0.1f;
+
 
 
     public override void Start()

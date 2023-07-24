@@ -372,11 +372,11 @@ MonoBehaviour:
   throwMaxHeight: 500
   throwDistance: 1
   throwChargeTime: 0
-  throwChargeMax: 2
+  throwChargeMax: 1.5
   maxThrowForce: 1000
   currentThrowForce: 0
   parabolaScale: 0.02
-  maxTimeOfFlight: 3
+  maxTimeOfFlight: 5
 --- !u!120 &1749504120589845196
 LineRenderer:
   serializedVersion: 2
@@ -428,7 +428,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.12657738
+        value: 0.9493671
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -449,7 +449,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.11886799, g: 0.5079085, b: 1, a: 0.29411766}
+      key0: {r: 0.11886799, g: 0.5079085, b: 1, a: 0.5019608}
       key1: {r: 0.13994245, g: 0.66415095, b: 0, a: 1}
       key2: {r: 0.24320967, g: 0.9622642, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -458,7 +458,7 @@ LineRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 42020
+      ctime1: 28720
       ctime2: 65535
       ctime3: 0
       ctime4: 0
@@ -466,7 +466,7 @@ LineRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65535
+      atime1: 19275
       atime2: 0
       atime3: 0
       atime4: 0

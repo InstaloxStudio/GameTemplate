@@ -6,31 +6,44 @@ using UnityEngine;
 /// </summary>
 public class RigidBodyCharacter : Pawn
 {
+    [Header("Movement Settings")]
     public float walkSpeed = 6.0f;
     public float runSpeed = 10f;
     public float airControlFactor = .2f;
     public float turnSpeed = 100.0f;
+
+    [Header("Jump Settings")]
     public float jumpForce = 2.0f;
+
+    [Header("Gravity Settings")]
     public float gravity = -9.81f;
 
+    [Header("Keys")]
     public KeyCode sprintKey = KeyCode.LeftShift;
 
+    [Header("Check Variables")]
     private Vector3 velocity;
     public bool isGrounded;
     public float groundCheckDistance = 0.2f;
 
+    [Header("Physics")]
     private Rigidbody rigidBody;
     public float damping = 10f;
+
+    [Header("Direction")]
     private Vector3 direction;
     private Vector2 movement;
     private bool jumpInput;
     private Vector3 combinedRaycast;
 
+    [Header("Timers and Speeds")]
     public float airControlTime = 0.5f;
     public float airControlTimer = 0f;
     public float currentSpeed = 0f;
 
+    [Header("Misc")]
     public bool lockRotation = false;
+
     public override void Start()
     {
         base.Start();

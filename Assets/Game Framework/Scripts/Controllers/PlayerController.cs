@@ -9,6 +9,7 @@ using UnityEngine;
 ///summary
 public class PlayerController : MonoBehaviour
 {
+    [Header("Input")]
     public Pawn possessedPawn;
     private Vector2 movementInput;
     private Vector2 rotationInput;
@@ -18,16 +19,18 @@ public class PlayerController : MonoBehaviour
     public Vector2 RotationInput { get { return rotationInput; } }
     public bool JumpInput { get { return jumpInput; } }
 
+    [Header("Camera")]
     [SerializeField]
     private Camera possessedCamera;
-
     public Camera PossessedCamera { get { return possessedCamera; } }
-
     protected CameraController cameraController;
     public CameraController CameraController { get { return cameraController; } }
-    public Pawn GetCharacter => possessedPawn;
-    public List<IControllable> controlledObjects = new List<IControllable>();
 
+    [Header("Controlled Objects")]
+    public List<IControllable> controlledObjects = new List<IControllable>();
+    public Pawn GetCharacter => possessedPawn;
+
+    [Header("Raycasting")]
     //fields for raycasting to the mouse
     private Ray ray;
     private RaycastHit mouseHit;
@@ -45,8 +48,10 @@ public class PlayerController : MonoBehaviour
     public bool IsMouseLocked => isMouseLocked;
     public bool IsMouseVisible => isMouseVisible;
 
+    [Header("Misc")]
     private bool hasInput = true;
     public bool HasInput => hasInput;
+
     void Update()
     {
         if (!hasInput)
