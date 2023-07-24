@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         //send all input to the active character
-        movementInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         rotationInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         jumpInput = Input.GetButtonDown("Jump");
 

@@ -24,6 +24,10 @@ public class HealthComponent : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (health <= 0)
+        {
+            return;
+        }
         health -= damage;
         if (health <= 0)
         {
@@ -34,6 +38,10 @@ public class HealthComponent : MonoBehaviour
 
     public void TakeDamage(DamageSource source)
     {
+        if (health <= 0)
+        {
+            return;
+        }
         health -= source.damageAmount;
         if (health <= 0)
         {
