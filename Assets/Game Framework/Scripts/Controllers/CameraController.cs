@@ -42,4 +42,10 @@ public abstract class CameraController : MonoBehaviour, IControllable
             playerController.UnregisterControlledObject(this);
         }
     }
+
+    public virtual void SetTarget(Transform target)
+    {
+        this.target = target;
+    }
+
 }

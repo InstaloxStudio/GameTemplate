@@ -11,8 +11,13 @@ public class ThirdPersonDemoGameMode : GameMode
     public override void Awake()
     {
         base.Awake();
+        //set gravity
+        Physics.gravity = new Vector3(0, -50, 0);
+
         // Spawn the ball
         SpawnBall();
+
+
     }
 
     public void SpawnBall()

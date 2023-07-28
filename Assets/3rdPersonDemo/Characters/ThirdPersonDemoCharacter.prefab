@@ -354,8 +354,8 @@ MonoBehaviour:
   runSpeed: 16
   airControlFactor: 0.8
   turnSpeed: 12
-  jumpForce: 130
-  gravity: -9.81
+  jumpForce: 325
+  gravity: -50
   sprintKey: 304
   isGrounded: 0
   groundCheckDistance: 0.1
@@ -367,13 +367,13 @@ MonoBehaviour:
   hasBall: 0
   ballPrefab: {fileID: 3154366038374445307, guid: 984c70b6274c00d4d80bd91e60a4865d, type: 3}
   gameBall: {fileID: 0}
-  throwForce: 1000
-  throwHeight: 1000
-  throwMaxHeight: 500
+  throwForce: 0
+  throwHeight: 0
+  throwMaxHeight: 2000
   throwDistance: 1
   throwChargeTime: 0
   throwChargeMax: 1.5
-  maxThrowForce: 1000
+  maxThrowForce: 4000
   currentThrowForce: 0
   parabolaScale: 0.02
   maxTimeOfFlight: 5

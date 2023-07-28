@@ -27,8 +27,13 @@ public class FPSDemoCharacter : Character
     void Update()
     {
         //set player data
+        FPSGameMode gameMode = FPSGameMode.Instance as FPSGameMode;
+        if (gameMode != null)
+        {
+            playerData.kills = gameMode.CurrentKills;
+
+        }
         playerData.health = this.healthComponent.Health;
-        playerData.kills = (FPSGameMode.Instance as FPSGameMode).CurrentKills;
 
         if (!GetPlayerController().HasInput)
             return;

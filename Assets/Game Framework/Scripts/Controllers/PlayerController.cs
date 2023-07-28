@@ -57,6 +57,16 @@ public class PlayerController : MonoBehaviour
         if (!hasInput)
             return;
 
+        if (possessedPawn == null)
+        {
+            return;
+        }
+
+        if (possessedCamera == null)
+        {
+            return;
+        }
+
         //send all input to the active character
         movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         rotationInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));

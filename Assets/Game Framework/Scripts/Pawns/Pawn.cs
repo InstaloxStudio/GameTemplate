@@ -27,7 +27,7 @@ public class Pawn : MonoBehaviour, IControllable
         // This method should be overridden by the subclasses to define the behavior
     }
     public bool isPossessed = false;
-    public void Awake()
+    public virtual void Awake()
     {
         cameraController = GetComponentInChildren<CameraController>();
 
