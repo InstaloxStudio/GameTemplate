@@ -137,7 +137,24 @@ public class PlayerController : MonoBehaviour
         possessedCamera = null;
     }
 
+    public virtual void ChangeCameraController(CameraController newCameraController)
+    {
+        if (cameraController != null)
+        {
+            cameraController.IsPossessed = false;
+            possessedCamera.enabled = false;
 
+            cameraController.enabled = false;
+
+        }
+
+        cameraController = newCameraController;
+        cameraController.enabled = true;
+        possessedCamera = newCameraController.Camera;
+        possessedCamera.enabled = true;
+        cameraController.IsPossessed = true;
+
+    }
     public Pawn GetActiveCharacter()
     {
         return possessedPawn;

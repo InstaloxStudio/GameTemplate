@@ -1,21 +1,20 @@
 using UnityEngine;
 
-public class FirstPersonCamera : CameraController
+public class OrbitCamera : CameraController
 {
     public float sensitivity = 100f;
-
-    private float verticalRotation = 0f;
+    private float xRotation = 0f;
+    private float yRotation = 0f;
 
     // Clamp the vertical angle of the camera to avoid flipping
     public float verticalAngleLimit = 80f;
 
-    public bool rotatePawn = true;
-
     public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
-        //only run if the pawn is possessed
         if (IsPossessed)
+        {
             HandleRotation(rotationInput);
+        }
     }
 
     private void HandleRotation(Vector2 rotationInput)
@@ -25,17 +24,14 @@ public class FirstPersonCamera : CameraController
         float mouseY = rotationInput.y * sensitivity * Time.deltaTime;
 
         // We subtract because y input is inverted (i.e., moving the mouse up gives you a negative value)
-        verticalRotation -= mouseY;
+        xRotation -= mouseY;
+        yRotation += mouseX;
 
-        // Clamp the vertical rotation so the player can't flip the camera upside-down
-        verticalRotation = Mathf.Clamp(verticalRotation, -verticalAngleLimit, verticalAngleLimit);
+        // Clamp the vertical rotation so the camera can't flip upside-down
+        xRotation = Mathf.Clamp(xRotation, -verticalAngleLimit, verticalAngleLimit);
 
         // Apply the rotation
-        transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
-
-        // Rotate the pawn if necessary
-        if (rotatePawn)
-            ControlledPawn.transform.Rotate(Vector3.up * mouseX);
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 
     public override void HandleCameraUpdate()
