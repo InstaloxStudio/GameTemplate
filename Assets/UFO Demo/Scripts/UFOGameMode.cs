@@ -6,7 +6,7 @@ public class UFOGameMode : GameMode
     {
         base.Awake();
         //set gravity
-        Physics.gravity = new Vector3(0, -50f, 0);
+        Physics.gravity = new Vector3(0, -9.81f, 0);
     }
 
     void Update()

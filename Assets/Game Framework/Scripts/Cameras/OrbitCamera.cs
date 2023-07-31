@@ -7,7 +7,8 @@ public class OrbitCamera : CameraController
     private float yRotation = 0f;
 
     // Clamp the vertical angle of the camera to avoid flipping
-    public float verticalAngleLimit = 80f;
+    public float verticalAngleLimitMin = -80f;
+    public float verticalAngleLimitMax = 80f;
 
     public override void ReceiveInput(Vector2 movementInput, Vector2 rotationInput, bool jumpInput)
     {
@@ -28,7 +29,7 @@ public class OrbitCamera : CameraController
         yRotation += mouseX;
 
         // Clamp the vertical rotation so the camera can't flip upside-down
-        xRotation = Mathf.Clamp(xRotation, -verticalAngleLimit, verticalAngleLimit);
+        xRotation = Mathf.Clamp(xRotation, verticalAngleLimitMin, verticalAngleLimitMax);
 
         // Apply the rotation
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);

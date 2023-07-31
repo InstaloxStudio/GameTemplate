@@ -82,6 +82,16 @@ public class TractorBeam : MonoBehaviour
 
         // Apply a drag to the target
         tractorTarget.drag = 10f;
+        tractorTarget.angularDrag = 10f;
+        tractorTarget.transform.rotation = Quaternion.Slerp(tractorTarget.transform.rotation, transform.rotation, Time.deltaTime * 10f);
+
+    }
+
+    private void ReleaseTarget()
+    {
+        tractorTarget.drag = 0f;
+        tractorTarget.angularDrag = 0.05f;
+        tractorTarget = null;
     }
 
     public void HandleInput()
@@ -95,11 +105,9 @@ public class TractorBeam : MonoBehaviour
             isBeamOn = false;
             if (tractorTarget)
             {
-                tractorTarget.drag = 0f;
-                tractorTarget = null;
+                ReleaseTarget();
             }
         }
-
 
     }
 }

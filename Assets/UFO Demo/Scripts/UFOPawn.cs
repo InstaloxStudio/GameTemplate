@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class UFOPawn : Pawn
 {
+    [Header("Input")]
+    public KeyCode verticleAccelerationKey = KeyCode.Q;
+    public KeyCode verticleDecelerationKey = KeyCode.E;
+
     [Header("Movement")]
     public float speed = 10f;
     public float turnSpeed = 60f;
@@ -15,7 +19,6 @@ public class UFOPawn : Pawn
     public CameraController defaultCameraController;
     public CameraController tractorBeamCameraController;
     public UFOViewState currentView = UFOViewState.Default;
-
 
     [Header("Tractor Beam")]
     public TractorBeam tractorBeam;
@@ -53,37 +56,52 @@ public class UFOPawn : Pawn
     public void HandleUFO(Vector3 direction)
     {
 
+
         if (movementInput == Vector2.zero)
         {
             rb.velocity = Vector3.zero; // UFO comes to an instant stop when there is no input.
         }
         else
         {
-            // UFO always moves in the direction it is facing.
-            Vector3 moveDirection = transform.forward * movementInput.y + transform.right * movementInput.x;
-            rb.velocity = moveDirection * speed;
+            //if we are in tractor beam mode, use the tractor beam's forward direction
+            if (currentView == UFOViewState.TractorBeam)
+            {
+                direction = tractorBeam.transform.forward * movementInput.y + tractorBeam.transform.right * movementInput.x;
+                rb.velocity = direction * speed;
+            }
+            else
+            {
+                // UFO always moves in the direction it is facing.
+                Vector3 moveDirection = transform.forward * movementInput.y + transform.right * movementInput.x;
+                rb.velocity = moveDirection * speed;
+            }
+
+
         }
     }
-
     public virtual void RotateCharacter(Vector3 direction, Vector2 movementInput)
     {
-        if (lockRotation)
-        {
-            Quaternion targetRotation = Quaternion.Euler(this.PlayerController.PossessedCamera.transform.eulerAngles.x,
-                                                          this.PlayerController.PossessedCamera.transform.eulerAngles.y,
-                                                          0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
-            return;
-        }
+
 
         if (movementInput != Vector2.zero)
         {
-            Quaternion targetRotation = Quaternion.Euler(this.PlayerController.PossessedCamera.transform.eulerAngles.x,
-                                                          this.PlayerController.PossessedCamera.transform.eulerAngles.y,
-                                                          0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+            if (currentView == UFOViewState.TractorBeam)
+            {
+                //direction = tractorBeam.transform.forward * movementInput.y;// + tractorBeam.transform.right * movementInput.x;
+                //transform.rotation = Quaternion.LookRotation(direction);
+                // Quaternion targetRotation = Quaternion.LookRotation(direction);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+            }
+            else
+            {
+                Quaternion targetRotation = Quaternion.Euler(this.PlayerController.PossessedCamera.transform.eulerAngles.x,
+                                              this.PlayerController.PossessedCamera.transform.eulerAngles.y, 0);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+            }
+
         }
     }
+
 
     public virtual Vector3 CalculateDirection(Vector2 movementInput)
     {
@@ -92,13 +110,13 @@ public class UFOPawn : Pawn
         if (movementInput.y > 0)
         {
             Vector3 cameraForward = this.PlayerController.PossessedCamera.transform.forward;
-            cameraForward.y = 0;
+            //cameraForward.y = 0;
             direction = cameraForward.normalized;
         }
         else if (movementInput.y < 0)
         {
             Vector3 cameraBackward = -this.PlayerController.PossessedCamera.transform.forward;
-            cameraBackward.y = 0;
+            // cameraBackward.y = 0;
             direction = cameraBackward.normalized;
         }
 

@@ -10,13 +10,8 @@ public class CameraBoom : MonoBehaviour
     [SerializeField]
     private Camera cam;  // The camera attached to the camera boom
 
-    public Camera Camera
-    {
-        get
-        {
-            return cam;
-        }
-    }
+    public Camera Camera => cam;
+
 
     void Start()
     {
