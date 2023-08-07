@@ -369,10 +369,10 @@ MonoBehaviour:
   gameBall: {fileID: 0}
   throwForce: 0
   throwHeight: 0
-  throwMaxHeight: 2000
+  throwMaxHeight: 1000
   throwDistance: 1
   throwChargeTime: 0
-  throwChargeMax: 1.5
+  throwChargeMax: 0.5
   maxThrowForce: 4000
   currentThrowForce: 0
   parabolaScale: 0.02

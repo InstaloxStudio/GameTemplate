@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// A pawn that can fly around
+/// </summary>
 public class DefaultPawn : Pawn
 {
     public float speed = 10.0f;

@@ -10,6 +10,7 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
 
     public float attackRange = 50f;
 
+    public PerceptionComponent perceptionComponent;
     protected override void Start()
     {
 
@@ -20,19 +21,36 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
         AIController = new AggressiveAIController(this);
         AIController.Initialize();
 
+        perceptionComponent = GetComponent<PerceptionComponent>();
+        perceptionComponent.OnDetected += HandleDetected;
+
         //if player is null find any pawn
-        if (player == null)
+        // if (player == null)
+        //{
+        // player = FindObjectOfType<Pawn>().transform;
+        //}
+    }
+
+    private void HandleDetected(IDetectable detectedEntity)
+    {
+        // Assuming the player implements IDetectable
+        if (detectedEntity is Pawn)
         {
-            player = FindObjectOfType<Pawn>().transform;
+            //get transform of detected entity
+            var detectedPawn = detectedEntity as Pawn;
+            var detectedPawnTransform = detectedPawn.transform;
+            this.stateText.text = "detected";
+            player = detectedPawnTransform;
+
         }
     }
+
 
     public void MoveToPlayer()
     {
 
-        var locationNearPlayer = Random.insideUnitSphere * 5f + player.position;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(locationNearPlayer, out hit, 5f, NavMesh.AllAreas);
+        var locationNearPlayer = Random.insideUnitSphere * 2f + player.position;
+        NavMesh.SamplePosition(locationNearPlayer, out NavMeshHit hit, 2f, NavMesh.AllAreas);
         agent.destination = hit.position;
 
 
@@ -46,12 +64,10 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
         bullet.transform.forward = transform.forward;
         bullet.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         bullet.AddComponent<Rigidbody>();
-        bullet.AddComponent<Bullet>();
-        bullet.GetComponent<Bullet>().speed = 30f;
-        bullet.GetComponent<Bullet>().bounces = 0;
-        bullet.GetComponent<Bullet>().damage = 10f;
-
-
+        var bulletComponent = bullet.AddComponent<Bullet>();
+        bulletComponent.speed = 30f;
+        bulletComponent.bounces = 0;
+        bulletComponent.damage = 10f;
     }
 
     public void AimAtPlayer()
@@ -77,4 +93,26 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
     {
         return Vector3.Distance(transform.position, player.position) <= attackRange;
     }
+
+    public bool IsPlayerInSight()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        if (Physics.Raycast(transform.position + transform.up + transform.forward * 1.5f, direction, out RaycastHit hit, detectionRadius))
+        {
+            if (hit.transform == player)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void OnDestroy()
+    {
+        if (perceptionComponent != null)
+        {
+            perceptionComponent.OnDetected -= HandleDetected;
+        }
+    }
+
+
 }

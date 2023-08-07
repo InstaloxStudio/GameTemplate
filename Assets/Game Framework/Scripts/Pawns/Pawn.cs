@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// Base class for all pawns, which are objects that can be possessed by a controller.
 /// </summary>
-public class Pawn : MonoBehaviour, IControllable
+public class Pawn : MonoBehaviour, IControllable, IDetectable
 {
 
     //event for when the pawn is possessed
@@ -112,5 +112,9 @@ public class Pawn : MonoBehaviour, IControllable
     public virtual void Initialize()
     {
         // This method should be overridden by the subclasses to define the behavior
+    }
+
+    public virtual void Detected(GameObject detector)
+    {
     }
 }

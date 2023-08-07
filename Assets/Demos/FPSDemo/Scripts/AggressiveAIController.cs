@@ -17,7 +17,7 @@ public class AggressiveAIController : AIController<AggressiveAIPawn>
     public override void Update()
     {
         base.Update();
-        IsPlayerInAttackRange = pawn.IsPlayerInAttackRange();
-        isPlayerInRange = pawn.IsPlayerInRange();
+        // IsPlayerInAttackRange = pawn.IsPlayerInAttackRange();
+        // isPlayerInRange = pawn.IsPlayerInRange();
     }
 }

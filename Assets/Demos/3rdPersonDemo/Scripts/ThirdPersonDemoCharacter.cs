@@ -24,6 +24,8 @@ public class ThirdPersonDemoCharacter : RigidBodyCharacter
     private LineRenderer lr;
     public float maxTimeOfFlight = 3f; // Adjust as needed
 
+    private float? throwStartTime = null;
+    private bool charging = false;
 
     public override void Initialize()
     {
@@ -40,36 +42,48 @@ public class ThirdPersonDemoCharacter : RigidBodyCharacter
             GetPlayerController().ToggleMouseLock();
         }
 
-        //do a charge throw if we have the ball
-        if (hasBall && Input.GetMouseButton(0))
+        if (hasBall)
         {
-            lockRotation = true;
-            throwChargeTime = Mathf.PingPong(Time.time, throwChargeMax);
-            //throwChargeTime += Time.deltaTime;
-            currentThrowForce = Mathf.Lerp(0, maxThrowForce, throwChargeTime / throwChargeMax);
-            throwHeight = Mathf.Lerp(0, throwMaxHeight, throwChargeTime / throwChargeMax);
-            var calculateDirection = transform.forward * currentThrowForce + transform.up * throwHeight;
-            DrawParabola(currentThrowForce, throwHeight);
+            if (Input.GetMouseButtonDown(0)) // Mouse button pressed down
+            {
+                lockRotation = true;
+                throwStartTime = Time.time;
+                charging = true;
+            }
 
+            if (throwStartTime.HasValue && Input.GetMouseButton(0)) // Mouse button held
+            {
+                throwChargeTime = Mathf.PingPong(Time.time - throwStartTime.Value, throwChargeMax);
+                currentThrowForce = Mathf.Lerp(0, maxThrowForce, throwChargeTime / throwChargeMax);
+                throwHeight = Mathf.Lerp(0, throwMaxHeight, throwChargeTime / throwChargeMax);
+                var calculateDirection = transform.forward * currentThrowForce + transform.up * throwHeight;
+                DrawParabola(currentThrowForce, throwHeight);
+            }
+
+            if (Input.GetMouseButtonUp(0) && charging) // Mouse button released while charging
+            {
+                lockRotation = false;
+                ThrowChargeBall(currentThrowForce);
+                charging = false;
+            }
         }
-
-        if (!hasBall && Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0))
         {
             SpawnBall();
         }
 
-        if (hasBall && Input.GetMouseButtonUp(0))
+        // If not charging, reset the charge time and force
+        if (!charging)
         {
-
-            lockRotation = false;
-            lr.positionCount = 0;
-            ThrowChargeBall(currentThrowForce);
-            currentThrowForce = 0f;
             throwChargeTime = 0f;
+            currentThrowForce = 0f;
+            lr.positionCount = 0;
             throwHeight = 1f;
+            throwStartTime = null; // Reset the start time
         }
-
     }
+
+
 
     public void ThrowChargeBall(float charge)
     {

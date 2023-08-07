@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Basic character pawn with basic movement and jumping.
+/// Basic character pawn with movement and jumping.
 /// Movement uses the camera's forward and right vectors to determine the direction to move in.
 /// </summary>
 public class Character : Pawn
@@ -125,10 +125,9 @@ public class Character : Pawn
 
     public virtual bool IsGrounded()
     {
-        RaycastHit hit;
         float sphereRadius = controller.radius;
         Vector3 sphereOrigin = transform.position + Vector3.up * sphereRadius;
-        if (Physics.SphereCast(sphereOrigin, sphereRadius, -Vector3.up, out hit, groundCheckDistance))
+        if (Physics.SphereCast(sphereOrigin, sphereRadius, -Vector3.up, out RaycastHit hit, groundCheckDistance))
         {
             return true;
         }

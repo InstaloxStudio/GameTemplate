@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
-public abstract class AIPawn<T> : MonoBehaviour where T : AIPawn<T>
+public abstract class AIPawn<T> : MonoBehaviour, IDetectable where T : AIPawn<T>
 {
     protected AIController<T> controller;
 
@@ -135,4 +135,8 @@ public abstract class AIPawn<T> : MonoBehaviour where T : AIPawn<T>
         agent.baseOffset = baseOffset;
     }
 
+    public virtual void Detected(GameObject detector)
+    {
+
+    }
 }

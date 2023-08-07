@@ -9,7 +9,12 @@ public class IdleState : IAIState<AggressiveAIPawn>
 
     public void Execute(AggressiveAIPawn pawn)
     {
-        if (pawn.IsPlayerInRange())
+        // if (pawn.IsPlayerInRange())
+        // {
+        //    pawn.ChangeState(new ChaseState());
+        // }
+
+        if (pawn.player != null)
         {
             pawn.ChangeState(new ChaseState());
         }

@@ -41,7 +41,7 @@ public class ThirdPersonDemoGameMode : GameMode
         }
 
         // Spawn the ball
-        SpawnBall();
+        // SpawnBall();
     }
 
 }

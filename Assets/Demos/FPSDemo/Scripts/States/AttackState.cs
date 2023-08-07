@@ -8,11 +8,22 @@ public class AttackState : IAIState<AggressiveAIPawn>
     {
         attackTimer = attackTime;
         pawn.stateText.text = "attack";
+        pawn.StopAgent();
 
     }
 
     public void Execute(AggressiveAIPawn pawn)
     {
+        if (pawn.player == null)
+        {
+            return;
+        }
+
+        if (!pawn.IsPlayerInSight())
+        {
+            pawn.ChangeState(new ChaseState());
+        }
+
         if (pawn.IsPlayerInRange())
         {
             if (pawn.IsPlayerInAttackRange())
