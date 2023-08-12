@@ -440,6 +440,7 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRadius: 10
   attackRange: 50
+  perceptionComponent: {fileID: 0}
 --- !u!136 &-932823237768957547
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -505,10 +506,11 @@ MonoBehaviour:
   fieldOfViewAngle: 60
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
   obstructionMask:
     serializedVersion: 2
     m_Bits: 129
+  eyeTransform: {fileID: 929804206306038997}
   hearingRange: 5
   soundEmitterMask:
     serializedVersion: 2

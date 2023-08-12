@@ -11,6 +11,10 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
     public float attackRange = 50f;
 
     public PerceptionComponent perceptionComponent;
+
+    public Vector3 lastSeenDirection;
+    public Vector3 playerLastFrame;
+    public Vector3 investigateTarget;
     protected override void Start()
     {
 
@@ -96,15 +100,17 @@ public class AggressiveAIPawn : AIPawn<AggressiveAIPawn>
 
     public bool IsPlayerInSight()
     {
-        Vector3 direction = (player.position - transform.position).normalized;
-        if (Physics.Raycast(transform.position + transform.up + transform.forward * 1.5f, direction, out RaycastHit hit, detectionRadius))
-        {
-            if (hit.transform == player)
-            {
-                return true;
-            }
-        }
-        return false;
+        //use the perception component to see if the player is visible
+        return perceptionComponent.IsDetectedBySight(player);
+
+    }
+
+    public void MoveToRandomSpotWithinRange(float range)
+    {
+        var randomDirection = Random.insideUnitSphere * range;
+        randomDirection += transform.position;
+        NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, range, NavMesh.AllAreas);
+        agent.destination = hit.position;
     }
     private void OnDestroy()
     {

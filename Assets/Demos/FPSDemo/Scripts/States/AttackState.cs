@@ -4,6 +4,7 @@ public class AttackState : IAIState<AggressiveAIPawn>
 {
     public float attackTime = 1f;
     private float attackTimer = 0f;
+
     public void Enter(AggressiveAIPawn pawn)
     {
         attackTimer = attackTime;
@@ -18,34 +19,21 @@ public class AttackState : IAIState<AggressiveAIPawn>
         {
             return;
         }
-
-        if (!pawn.IsPlayerInSight())
+        //check if we can see the player
+        if (pawn.perceptionComponent.IsDetectedBySight(pawn.player))
         {
-            pawn.ChangeState(new ChaseState());
-        }
-
-        if (pawn.IsPlayerInRange())
-        {
-            if (pawn.IsPlayerInAttackRange())
+            pawn.AimAtPlayer();
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0f)
             {
-                if (pawn.IsFacingPlayer())
-                {
-                    attackTimer -= Time.deltaTime;
-                    if (attackTimer <= 0f)
-                    {
-                        //shoot bullet at player
-                        pawn.Shoot();
-                        attackTimer = attackTime;
-                    }
-                }
-                else
-                {
-                    pawn.AimAtPlayer();
-                }
+                //shoot bullet at player
+                pawn.Shoot();
+                attackTimer = attackTime;
             }
         }
         else
         {
+            //if we can't see the player, go back to chasing the player
             pawn.ChangeState(new ChaseState());
         }
     }

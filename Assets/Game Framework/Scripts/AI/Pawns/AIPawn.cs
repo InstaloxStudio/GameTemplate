@@ -139,4 +139,19 @@ public abstract class AIPawn<T> : MonoBehaviour, IDetectable where T : AIPawn<T>
     {
 
     }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public virtual void OnSeen(GameObject detector)
+    {
+
+    }
+
+    public virtual void OnHeard(GameObject detector)
+    {
+
+    }
 }

@@ -117,4 +117,19 @@ public class Pawn : MonoBehaviour, IControllable, IDetectable
     public virtual void Detected(GameObject detector)
     {
     }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public virtual void OnSeen(GameObject detector)
+    {
+
+    }
+
+    public virtual void OnHeard(GameObject detector)
+    {
+
+    }
 }
